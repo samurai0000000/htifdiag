@@ -32,11 +32,20 @@ static inline unsigned long htif_fromhost(void)
 	return data;
 }
 
+static void test_htif_console(void)
+{
+	htif_tohost(1, HTIF_CMD_WRITE, 'h');
+	htif_tohost(1, HTIF_CMD_WRITE, 'e');
+	htif_tohost(1, HTIF_CMD_WRITE, 'l');
+	htif_tohost(1, HTIF_CMD_WRITE, 'l');
+	htif_tohost(1, HTIF_CMD_WRITE, 'o');
+	htif_tohost(1, HTIF_CMD_WRITE, '\n');
+}
+
 int main(int argc, char **argv)
 {
 	printstr("htifdiag\n");
-
-	htif_tohost(0, 0, 0);
+	test_htif_console();
 
 	return 0;
 }

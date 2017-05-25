@@ -47,7 +47,7 @@ _start:
   li  x31,0
 
   # initialize status, enable fp, accelerator, interrupts
-  li a0, SR_S | SR_PEI | SR_EF | SR_EA
+  li a0, SR_S | SR_PS | SR_PEI | SR_EF | SR_EA
   csrw status, a0
 
 #ifdef __riscv64
