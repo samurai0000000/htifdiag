@@ -33,4 +33,4 @@ rebuild-fesvr:
 .PHONY: run-diag
 
 run-diag: diag
-	$(TOP)/emulator/emulator-DefaultCPPConfig diag
+	$(TOP)/emulator/emulator-DefaultCPPConfig +disk=/dev/null diag

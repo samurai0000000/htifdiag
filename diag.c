@@ -5,6 +5,7 @@
  */
 
 #include "util.h"
+#include <stdio.h>
 
 #define HTIF_DEV_SHIFT      (56)
 #define HTIF_CMD_SHIFT      (48)
@@ -42,10 +43,31 @@ static void test_htif_console(void)
 	htif_tohost(1, HTIF_CMD_WRITE, '\n');
 }
 
+static void htif_bus_enumerate(void)
+{
+	char buf[64] __attribute__((aligned(64)));
+	char str[128];
+	unsigned int minor, code;
+
+	printstr("enumerate:\n");
+	for (minor = 0; minor < HTIF_NR_DEV; minor++) {
+		htif_tohost(minor, HTIF_CMD_IDENTITY,
+			    ((unsigned long) buf << 8) | 0xff);
+		htif_fromhost();
+
+
+		if (buf[0] != '\0') {
+			sprintf(str, "dev%d = %s\n", minor, buf);
+			printstr(str);
+		}
+	}
+}
+
 int main(int argc, char **argv)
 {
 	printstr("htifdiag\n");
 	test_htif_console();
+	htif_bus_enumerate();
 
 	return 0;
 }
